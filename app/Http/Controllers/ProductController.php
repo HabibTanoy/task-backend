@@ -14,7 +14,10 @@ class ProductController extends Controller
         return response()->json([
             'success' => true,
             'errors' => null,
-            'data' => $products
+            'data' => [
+                'shareableLink' => "https://www.temporary-url.com/D85696",
+                'products' => $products
+]
         ]);
     }
 
