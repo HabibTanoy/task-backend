@@ -78,4 +78,56 @@ class ProductController extends Controller
             ]);
         }
     }
+
+    public function statusChange(Request $request, $id)
+    {
+        $rules = [
+          'status' => 'required|in:0,1'
+        ];
+        $messages = [
+            'status.required' => 'Enter Status'
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if($validator->errors()->first()){
+            return response()->json([
+                'success' => false,
+                'errors'  => $validator->errors(),
+                'data'    => null,
+            ],422);
+        }
+
+        $product = Product::where('id', $id)
+            ->first();
+        if (!$product) {
+            return response()->json([
+                'success' => false,
+                'errors'  => [
+                    'Product Not Found'
+                ],
+                'data'    => null,
+            ],404);
+        }
+
+        if ((int) $product->status == (int) $request->status) {
+            return response()->json([
+                'success' => false,
+                'errors'  => [
+                    'Product already in this status'
+                ],
+                'data'    => null,
+            ],422);
+        }
+
+        $product->update([
+            'status' => $request->status
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'errors'  => null,
+            'data'    => "Product Status Updated Successfully",
+        ],200);
+
+    }
 }

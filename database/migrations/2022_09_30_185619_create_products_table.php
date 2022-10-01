@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('description')->nullable();
             $table->string('unit')->nullable();
             $table->integer('weightPerUnit')->nullable();
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

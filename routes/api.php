@@ -21,4 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::namespace('App\Http\Controllers')->group(function () {
     Route::post('/add', 'ProductController@store');
     Route::get('/product', 'ProductController@index');
+    Route::put('/product/{id}/status-update', 'ProductController@statusChange');
 });
